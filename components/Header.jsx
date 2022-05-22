@@ -12,7 +12,7 @@ const Header = () => {
         // setActiveItem(name);
     }
     return (
-        <Menu>
+        <Menu style = {{marginTop : '10px' }}>
             <Menu.Item
                 name='CrowdCoin'
                 active={activeItem === 'CrowdCoin'}
