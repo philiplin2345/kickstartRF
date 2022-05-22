@@ -7,6 +7,7 @@ import web3 from '../../ethereum/web3'
 const CampaignNew = () => {
     const [minContribution, setMinContribution] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isProcessingTx, setIsProcessingTx] = useState(false);
 
     const handleMinContributionChange = () => {
         setMinContribution(event.target.value);
@@ -14,6 +15,8 @@ const CampaignNew = () => {
 
     const submitForm = async () => {
         event.preventDefault();
+        setIsProcessingTx(true);
+        setErrorMessage('');
         try {
             const accounts = await web3.eth.getAccounts();
             await factory.methods.createCampaign(minContribution)
@@ -24,6 +27,7 @@ const CampaignNew = () => {
             setErrorMessage(error.message);
         }
         setMinContribution(0);
+        setIsProcessingTx(false);
 
     };
 
@@ -40,7 +44,7 @@ const CampaignNew = () => {
                 header='There was some errors with your submission'
                 content = {errorMessage}
             />
-            <Button type='submit' primary>Create</Button>
+            <Button type='submit' primary loading={isProcessingTx}>Create</Button>
         </Form>
     )
 }
