@@ -1,14 +1,22 @@
-import React from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import React, {useState} from 'react'
+import { Button, Form,Input } from 'semantic-ui-react'
 
 
 const CampaignNew = () => {
+    const[minContribution, setMinContribution] = useState(0);
+
+    const handleMinContributionChange = ()=>{
+        setMinContribution(event.target.value);
+    }
+
+
+
     return (
         <Form>
             <h3>Create a Campaign!</h3>
             <Form.Field>
                 <label>Minimum Contribution</label>
-                <input placeholder='in wei' />
+                <Input label='wei' placeholder='amount' labelPosition='right' onChange={handleMinContributionChange} />
             </Form.Field>
             
            
