@@ -1,8 +1,10 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import Header from "../components/Header";
 import { Container } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+
+
 
 function MyApp({ Component, pageProps }) {
     return (

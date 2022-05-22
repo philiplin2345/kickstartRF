@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import { Menu } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react';
+import { Menu } from 'semantic-ui-react';
+import { useRouter } from 'next/dist/client/router';
 
 
 const Header = () => {
 
     const [activeItem, setActiveItem] = useState('')
-
+    const router = useRouter();
     const handleItemClick = (event, menuItem) => {
         console.log(event.target);
         console.log(menuItem.name);
-        // setActiveItem(name);
+        router.push("/campaigns/new");
     }
     return (
         <Menu style = {{marginTop : '10px' }}>
             <Menu.Item
                 name='CrowdCoin'
                 active={activeItem === 'CrowdCoin'}
-                onClick={handleItemClick}
             >
                 CrowdCoin
             </Menu.Item>
@@ -26,7 +26,6 @@ const Header = () => {
                 <Menu.Item
                     name='Campaigns'
                     active={activeItem === 'Campaigns'}
-                    onClick={handleItemClick}
                 >
                     Campaigns
                 </Menu.Item>
