@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import factory from '../ethereum/factory'
 import { Card, Button } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
+
 
 const Index = (props) => {
 
