@@ -30,6 +30,7 @@ const Index = (props) => {
 
     return (
         <div>
+            <h3>Open campaigns</h3>
             {allCampaigns}
             <Button content = 'Create Campaign' icon ='add circle' primary></Button>
         </div>
