@@ -15,12 +15,14 @@ const Header = () => {
     return (
         <Menu style = {{marginTop : '10px' }}>
             <Link href = "/"> 
+            <a>
             <Menu.Item
                 name='CrowdCoin'
                 active={activeItem === 'CrowdCoin'}
             >
                 CrowdCoin
             </Menu.Item>
+            </a>
             </Link>
             
             <Menu.Menu position='right'>
@@ -31,12 +33,14 @@ const Header = () => {
                     Campaigns
                 </Menu.Item>
                 <Link href = "/campaigns/new"> 
+                <a>
                 <Menu.Item
                     name='plus'
                     active={activeItem === 'plus'}
                 >
                     +
                 </Menu.Item>
+                </a>
                 </Link>
             </Menu.Menu>
         </Menu>

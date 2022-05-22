@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import factory from '../ethereum/factory'
 import { Card, Button } from 'semantic-ui-react'
-
+import Link from 'next/link'
 
 const Index = (props) => {
 
@@ -21,7 +21,9 @@ const Index = (props) => {
         return {
             header: address,
             description:
-                <a>View Campaign</a>,
+                <Link href = {`/campaigns/${address}`}>
+                <a>View Campaign</a>
+                </Link>,
             fluid: true
         };
     })
@@ -31,7 +33,11 @@ const Index = (props) => {
     return (
         <div>
             <h3>Open campaigns</h3>
+            <Link href = "/campaigns/new" >
+            <a>
             <Button content='Create Campaign' icon='add circle' primary floated='right'></Button>
+            </a>
+            </Link>
             {allCampaigns}
         </div>
     )
