@@ -1,29 +1,41 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import factory from '../ethereum/factory'
+import { Card } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 const Index = (props) => {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
         let campaigns;
-        const getCampaigns = async ()=>{
+        const getCampaigns = async () => {
             campaigns = await factory.methods.getDeployedCampaigns().call();
             console.log(campaigns)
         }
         getCampaigns()
 
-    },[])
+    }, [])
 
-  return (
-    <div>{props.campaigns[0]}</div>
-  )
+    const allCampaignsItems = props.campaigns.map(address => {
+    return {
+        header: address,
+        description:
+          <a>View Campaign</a>,
+        fluid: true
+      };})
+    
+    const allCampaigns = <Card.Group items = {allCampaignsItems}/>
+    
+    return (
+        <div>{allCampaigns}</div>
+    )
 }
 
 
-Index.getInitialProps = async ()=> {
+Index.getInitialProps = async () => {
     const campaigns = await factory.methods.getDeployedCampaigns().call();
-    return {campaigns};
+    return { campaigns };
 }
 
 export default Index
