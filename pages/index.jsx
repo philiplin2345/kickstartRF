@@ -31,8 +31,8 @@ const Index = (props) => {
     return (
         <div>
             <h3>Open campaigns</h3>
+            <Button content='Create Campaign' icon='add circle' primary floated='right'></Button>
             {allCampaigns}
-            <Button content = 'Create Campaign' icon ='add circle' primary></Button>
         </div>
     )
 }
