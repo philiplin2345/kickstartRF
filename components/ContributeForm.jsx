@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 
 const ContributeForm = (props) => {
     const [contributionAmount, setContributionAmount] = useState(0)
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isProcessingTx, setIsProcessingTx] = useState(false);
     const router = useRouter();
 
     const handleInputChange = ()=>{
@@ -16,6 +18,8 @@ const ContributeForm = (props) => {
         event.preventDefault();
         const campaign = new Campaign(props.address);
         console.log(campaign);
+        setIsProcessingTx(true);
+        setErrorMessage('');
         try{
             const accounts = await web3.eth.getAccounts();
             await campaign.methods.contribute().send({
@@ -25,17 +29,24 @@ const ContributeForm = (props) => {
             setContributionAmount(0);
             router.reload(`/campaigns/${props.address}`)
         }catch(error){
-
+          setErrorMessage(error.message);
         }
+        setIsProcessingTx(false);
+        setContributionAmount(0);
     }
     console.log(`props address is ${props.address}`)
   return (
-    <Form onSubmit = {handleSubmit}>
+    <Form onSubmit = {handleSubmit} error = {!!errorMessage}>
       <Form.Field>
         <label>Amount to Contribute</label>
         <Input label="ether" placeholder="amount" labelPosition="right" onChange={handleInputChange} />
       </Form.Field>
-      <Button type="submit" primary>
+      <Message
+                error
+                header='There was some errors with your submission'
+                content = {errorMessage}
+            />
+      <Button type="submit" primary loading = {isProcessingTx}>
         Contribute!
       </Button>
     </Form>
