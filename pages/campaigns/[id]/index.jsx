@@ -1,8 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useRouter } from 'next/router';
 import EthCp from '../../../ethereum/campaign'
+import { Card } from 'semantic-ui-react';
 
 const Campaign = (props) => {
+    const [campaignStats, setCampaignStats] = useState({
+        minimumContribution:   props.minimumContribution,
+        balance: props.balance,
+        requestsCount: props.requestsCount,
+        approversCount: props.approversCount,
+        manager:props.manager
+    })
+
+    
+    const statKeys = Object.keys(campaignStats);
+    console.log(statKeys);
+    statKeys.forEach((key, index) => {
+        console.log(`${key}: ${campaignStats[key]}`);
+    });
+    let cardItems = []
+    statKeys.forEach((key, index) =>{
+        cardItems.push({header: campaignStats[key],
+        description: `The contents for ${key}`,
+        meta: key,
+        style: {overflowWrap: 'break-word'}})
+      });
+    console.log(cardItems)
     const router = useRouter();
     const { id } = router.query;
     console.log(props.minimumContribution);
@@ -11,7 +34,7 @@ const Campaign = (props) => {
     console.log(props.approversCount);
     console.log(props.manager);
     // console.log(props.summary)
-    return <h3>Campaign {id}</h3>;
+    return <><h3>Campaign {id}</h3><Card.Group items={cardItems} /></>;
 };
 
 
