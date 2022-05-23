@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import { Form, Input, Message, Button } from "semantic-ui-react";
-const ContributeForm = () => {
+import Campaign  from "../ethereum/campaign";
+
+
+const ContributeForm = (props) => {
     const [contributionAmount, setContributionAmount] = useState(0)
     const handleInputChange = ()=>{
         setContributionAmount(event.target.value)
@@ -8,7 +11,10 @@ const ContributeForm = () => {
     }
     const handleSubmit = () =>{
         event.preventDefault();
+        const campaign = new Campaign(props.address);
+        console.log(campaign);
     }
+    console.log(`props address is ${props.address}`)
   return (
     <Form onSubmit = {handleSubmit}>
       <Form.Field>

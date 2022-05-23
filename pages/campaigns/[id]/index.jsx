@@ -44,7 +44,7 @@ const Campaign = (props) => {
           <Card.Group items={cardItems} />
         </Grid.Column>
         <Grid.Column width={6}>
-          <ContributeForm></ContributeForm>
+          <ContributeForm address = {id}></ContributeForm>
         </Grid.Column>
       </Grid>
     </>
