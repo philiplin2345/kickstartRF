@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useRouter } from 'next/router';
 import EthCp from '../../../ethereum/campaign'
 import { Card } from 'semantic-ui-react';
+import ContributeForm from '../../../components/ContributeForm';
 
 const Campaign = (props) => {
     const [campaignStats, setCampaignStats] = useState({
@@ -34,7 +35,7 @@ const Campaign = (props) => {
     console.log(props.approversCount);
     console.log(props.manager);
     // console.log(props.summary)
-    return <><h3>Campaign {id}</h3><Card.Group items={cardItems} /></>;
+    return <><h3>Campaign {id}</h3><Card.Group items={cardItems} /><ContributeForm></ContributeForm></>;
 };
 
 
