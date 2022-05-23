@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Form, Input, Message, Button } from "semantic-ui-react";
 import Campaign  from "../ethereum/campaign";
+import web3 from "../ethereum/web3";
 
 
 const ContributeForm = (props) => {
@@ -9,10 +10,20 @@ const ContributeForm = (props) => {
         setContributionAmount(event.target.value)
         console.log(contributionAmount)
     }
-    const handleSubmit = () =>{
+    const handleSubmit = async (event) =>{
         event.preventDefault();
         const campaign = new Campaign(props.address);
         console.log(campaign);
+        try{
+            const accounts = await web3.eth.getAccounts();
+            await campaign.methods.contribute().send({
+                from:accounts[0],
+                value: web3.utils.toWei(contributionAmount,'ether')
+            });
+            setContributionAmount(0);
+        }catch(error){
+
+        }
     }
     console.log(`props address is ${props.address}`)
   return (
