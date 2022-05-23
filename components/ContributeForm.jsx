@@ -2,10 +2,12 @@ import React, {useState} from "react";
 import { Form, Input, Message, Button } from "semantic-ui-react";
 import Campaign  from "../ethereum/campaign";
 import web3 from "../ethereum/web3";
-
+import { useRouter } from "next/router";
 
 const ContributeForm = (props) => {
     const [contributionAmount, setContributionAmount] = useState(0)
+    const router = useRouter();
+
     const handleInputChange = ()=>{
         setContributionAmount(event.target.value)
         console.log(contributionAmount)
@@ -21,6 +23,7 @@ const ContributeForm = (props) => {
                 value: web3.utils.toWei(contributionAmount,'ether')
             });
             setContributionAmount(0);
+            router.reload(`/campaigns/${props.address}`)
         }catch(error){
 
         }
