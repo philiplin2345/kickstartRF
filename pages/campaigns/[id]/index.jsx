@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import EthCp from "../../../ethereum/campaign";
-import { Card, Grid } from "semantic-ui-react";
+import { Button, Card, Grid } from "semantic-ui-react";
 import ContributeForm from "../../../components/ContributeForm";
+import Link from 'next/link'
 
 const Campaign = (props) => {
   const [campaignStats, setCampaignStats] = useState({
@@ -42,6 +43,12 @@ const Campaign = (props) => {
       <Grid>
         <Grid.Column width={10}>
           <Card.Group items={cardItems} />
+          <Link href = {`/campaigns/${props.address}/requests`} >
+            <a>
+                <Button style = {{marginTop : '10px' }} primary> View Requests</Button>
+            </a>
+          
+          </Link>
         </Grid.Column>
         <Grid.Column width={6}>
           <ContributeForm address = {id}></ContributeForm>
