@@ -19,15 +19,15 @@ const RequestIndex = (props) => {
         </Table.Header>
     )
     const allRequests = JSON.parse(props.requests);
-    const body = allRequests.map((rq,index) => {
+    const body = allRequests.map((rq, index) => {
         return (
             <Table.Body>
                 <Table.Row>
-                    <Table.Cell>{index +1}</Table.Cell>
+                    <Table.Cell>{index + 1}</Table.Cell>
                     <Table.Cell>{rq.description}</Table.Cell>
-                    <Table.Cell>{ web3.utils.fromWei(rq.value,'ether')}</Table.Cell>
+                    <Table.Cell>{web3.utils.fromWei(rq.value, 'ether')}</Table.Cell>
                     <Table.Cell>{rq.recipient}</Table.Cell>
-                    <Table.Cell>{rq.approvalCount}</Table.Cell>
+                    <Table.Cell>{rq.approvalCount}/{props.totalApprovers}</Table.Cell>
                     <Table.Cell>Cell</Table.Cell>
                     <Table.Cell>Cell</Table.Cell>
                 </Table.Row>
@@ -65,13 +65,16 @@ export async function getServerSideProps(context) {
             return campaign.methods.requests(index).call();
         })
     );
-    console.log(requests)
+    const totalApprovers = await campaign.methods.approversCount().call()
+    console.log(requests);
+    console.log(totalApprovers);
     // const cp = EthCp(context.query.id);
     // const summary = await cp.methods.getSummary().call();
     return {
         props: {
             address: address,
-            requests: JSON.stringify(requests)
+            requests: JSON.stringify(requests),
+            totalApprovers: totalApprovers
             // minimumContribution: summary[0],
             // balance: summary[1],
             // requestsCount: summary[2],
