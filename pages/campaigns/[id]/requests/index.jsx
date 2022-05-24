@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
     const requestCount = await campaign.methods.getRequestsCount().call();
 
     const requests = await Promise.all(
-        Array(requestCount).fill().map((element,index)=>{
+        Array(parseInt(requestCount)).fill().map((element, index) => {
             return campaign.methods.requests(index).call();
         })
     );
