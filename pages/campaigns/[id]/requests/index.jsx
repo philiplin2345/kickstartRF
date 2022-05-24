@@ -1,18 +1,49 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import Link from 'next/link';
 import web3 from '../../../../ethereum/web3';
 import Campaign from '../../../../ethereum/campaign';
 
 const RequestIndex = (props) => {
+    const header = (
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>ID</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+            <Table.HeaderCell>Amount</Table.HeaderCell>
+            <Table.HeaderCell>Recipient</Table.HeaderCell>
+            <Table.HeaderCell>Approval Count</Table.HeaderCell>
+            <Table.HeaderCell>Approve </Table.HeaderCell>
+            <Table.HeaderCell>Finalize</Table.HeaderCell>
+            <Table.HeaderCell>Header</Table.HeaderCell>
+            <Table.HeaderCell>Header</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+      )
+      const body = (
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Cell</Table.Cell>
+            <Table.Cell>Cell</Table.Cell>
+            <Table.Cell>Cell</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      )
+      
+
     return (
         <>
+            
             <div>{props.address} requests</div>
             <Link href={`/campaigns/${props.address}/requests/new`} >
                 <a>
                     <Button primary >Add Request</Button>
                 </a>
             </Link>
+            <Table attached='top' basic>
+                {header}
+                {body}
+            </Table>
         </>
     )
 }
