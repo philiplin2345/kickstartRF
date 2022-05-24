@@ -5,14 +5,25 @@ import web3 from '../../../../ethereum/web3';
 import Campaign from '../../../../ethereum/campaign';
 
 const RequestIndex = (props) => {
-    const camapign = Campaign (props.address);
-    const onApprovalClick = async (id) =>{
+    const camapign = Campaign(props.address);
+    const onApprovalClick = async (id) => {
         const accounts = await web3.eth.getAccounts();
         await camapign.methods.approveRequest(parseInt(id)).send({
-            from:accounts[0]
+            from: accounts[0]
         });
 
     }
+
+    const onFinalizeClick = async (id) => {
+        const accounts = await web3.eth.getAccounts();
+        await camapign.methods.finalizeRequest(parseInt(id)).send({
+            from: accounts[0]
+        });
+
+    }
+
+
+
     const header = (
         <Table.Header>
             <Table.Row>
@@ -29,15 +40,15 @@ const RequestIndex = (props) => {
     const allRequests = JSON.parse(props.requests);
     const body = allRequests.map((rq, index) => {
         return (
-            <Table.Body>
+            <Table.Body key={index}>
                 <Table.Row>
                     <Table.Cell>{index + 1}</Table.Cell>
                     <Table.Cell>{rq.description}</Table.Cell>
                     <Table.Cell>{web3.utils.fromWei(rq.value, 'ether')}</Table.Cell>
                     <Table.Cell>{rq.recipient}</Table.Cell>
                     <Table.Cell>{rq.approvalCount}/{props.totalApprovers}</Table.Cell>
-                    <Table.Cell><Button color='green' basic onClick = {()=>onApprovalClick(index)}>Approve</Button></Table.Cell>
-                    <Table.Cell>Cell</Table.Cell>
+                    <Table.Cell><Button color='green' basic onClick={() => onApprovalClick(index)}>Approve</Button></Table.Cell>
+                    <Table.Cell><Button color='teal' basic onClick={() => onFinalizeClick(index)}>Finalize</Button></Table.Cell>
                 </Table.Row>
             </Table.Body>
         )
