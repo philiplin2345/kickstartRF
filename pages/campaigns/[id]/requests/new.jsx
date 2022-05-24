@@ -7,12 +7,25 @@ import Link from 'next/link';
 const RequestNew = (props) => {
 
     const [descriptionInput, setDescriptionInput] = useState('');
-    const [valueInput, setValueInput] = useState('');
+    const [valueInput, setValueInput] = useState(0);
     const [recipientInput, setRecipientInput] = useState('');
+    const submitNewRequest = async (event) => {
+        event.preventDefault();
+        const campaign = Campaign(props.address);
+        console.log(descriptionInput, web3.utils.toWei(valueInput, 'ether'), recipientInput)
+        try {
+            const accounts = await web3.eth.getAccounts();
+            await campaign.methods.createRequest(
+                descriptionInput, web3.utils.toWei(valueInput, 'ether'), recipientInput
+            ).send({ from: accounts[0] });
+        } catch (error) {
+
+        }
+    }
     return (
         <>
             <h3>Create a Request</h3>
-            <Form>
+            <Form onSubmit={submitNewRequest}>
                 <Form.Field>
                     <label>Description</label>
                     <Input value={descriptionInput} onChange={e => setDescriptionInput(e.target.value)}></Input>
@@ -25,7 +38,7 @@ const RequestNew = (props) => {
                     <label>Recipient</label>
                     <Input value={recipientInput} onChange={e => setRecipientInput(e.target.value)}></Input>
                 </Form.Field>
-                <Button primary> Create!! </Button>
+                <Button primary type='submit'> Create!! </Button>
             </Form>
         </>
     )
