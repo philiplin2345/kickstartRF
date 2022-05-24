@@ -62,13 +62,14 @@ const RequestIndex = (props) => {
             <div>{props.address} requests</div>
             <Link href={`/campaigns/${props.address}/requests/new`} >
                 <a>
-                    <Button primary >Add Request</Button>
+                    <Button primary floated = "right" style = {{marginBottom:'10px'}}>Add Request</Button>
                 </a>
             </Link>
             <Table attached='top' basic>
                 {header}
                 {body}
             </Table>
+            <div>Found {allRequests.length} requests</div>
         </>
     )
 }
