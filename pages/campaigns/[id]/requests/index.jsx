@@ -39,16 +39,17 @@ const RequestIndex = (props) => {
     )
     const allRequests = JSON.parse(props.requests);
     const body = allRequests.map((rq, index) => {
+        const readyToFinalize = rq.approvalCount>props.totalApprovers/2;
         return (
             <Table.Body key={index}>
-                <Table.Row>
+                <Table.Row disabled= {rq.complete} positive= {readyToFinalize && !rq.complete}>
                     <Table.Cell>{index + 1}</Table.Cell>
                     <Table.Cell>{rq.description}</Table.Cell>
                     <Table.Cell>{web3.utils.fromWei(rq.value, 'ether')}</Table.Cell>
                     <Table.Cell>{rq.recipient}</Table.Cell>
                     <Table.Cell>{rq.approvalCount}/{props.totalApprovers}</Table.Cell>
-                    <Table.Cell><Button color='green' basic onClick={() => onApprovalClick(index)}>Approve</Button></Table.Cell>
-                    <Table.Cell><Button color='teal' basic onClick={() => onFinalizeClick(index)}>Finalize</Button></Table.Cell>
+                    <Table.Cell>{!rq.complete&&<Button color='green' basic onClick={() => onApprovalClick(index)}>Approve</Button>}</Table.Cell>
+                    <Table.Cell>{!rq.complete&&<Button color='teal' basic onClick={() => onFinalizeClick(index)}>Finalize</Button>}</Table.Cell>
                 </Table.Row>
             </Table.Body>
         )
