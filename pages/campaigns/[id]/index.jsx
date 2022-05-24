@@ -52,7 +52,7 @@ const Campaign = (props) => {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column>
-                        <Link href={`/campaigns/${props.address}/requests`} >
+                        <Link href={`/campaigns/${id}/requests`} >
                             <a>
                                 <Button  primary> View Requests</Button>
                             </a>
