@@ -7,33 +7,38 @@ import Campaign from '../../../../ethereum/campaign';
 const RequestIndex = (props) => {
     const header = (
         <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>ID</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Amount</Table.HeaderCell>
-            <Table.HeaderCell>Recipient</Table.HeaderCell>
-            <Table.HeaderCell>Approval Count</Table.HeaderCell>
-            <Table.HeaderCell>Approve </Table.HeaderCell>
-            <Table.HeaderCell>Finalize</Table.HeaderCell>
-            <Table.HeaderCell>Header</Table.HeaderCell>
-            <Table.HeaderCell>Header</Table.HeaderCell>
-          </Table.Row>
+            <Table.Row>
+                <Table.HeaderCell>ID</Table.HeaderCell>
+                <Table.HeaderCell>Description</Table.HeaderCell>
+                <Table.HeaderCell>Amount</Table.HeaderCell>
+                <Table.HeaderCell>Recipient</Table.HeaderCell>
+                <Table.HeaderCell>Approval Count</Table.HeaderCell>
+                <Table.HeaderCell>Approve </Table.HeaderCell>
+                <Table.HeaderCell>Finalize</Table.HeaderCell>
+            </Table.Row>
         </Table.Header>
-      )
-      const body = (
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Cell</Table.Cell>
-            <Table.Cell>Cell</Table.Cell>
-            <Table.Cell>Cell</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      )
-      
+    )
+    const allRequests = JSON.parse(props.requests);
+    const body = allRequests.map((rq,index) => {
+        return (
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell>{index +1}</Table.Cell>
+                    <Table.Cell>{rq.description}</Table.Cell>
+                    <Table.Cell>{ web3.utils.fromWei(rq.value,'ether')}</Table.Cell>
+                    <Table.Cell>{rq.recipient}</Table.Cell>
+                    <Table.Cell>{rq.approvalCount}</Table.Cell>
+                    <Table.Cell>Cell</Table.Cell>
+                    <Table.Cell>Cell</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        )
+    })
+
 
     return (
         <>
-            
+
             <div>{props.address} requests</div>
             <Link href={`/campaigns/${props.address}/requests/new`} >
                 <a>
@@ -65,7 +70,8 @@ export async function getServerSideProps(context) {
     // const summary = await cp.methods.getSummary().call();
     return {
         props: {
-            address: address
+            address: address,
+            requests: JSON.stringify(requests)
             // minimumContribution: summary[0],
             // balance: summary[1],
             // requestsCount: summary[2],
