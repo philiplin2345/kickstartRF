@@ -5,6 +5,14 @@ import web3 from '../../../../ethereum/web3';
 import Campaign from '../../../../ethereum/campaign';
 
 const RequestIndex = (props) => {
+    const camapign = Campaign (props.address);
+    const onApprovalClick = async (id) =>{
+        const accounts = await web3.eth.getAccounts();
+        await camapign.methods.approveRequest(parseInt(id)).send({
+            from:accounts[0]
+        });
+
+    }
     const header = (
         <Table.Header>
             <Table.Row>
@@ -28,7 +36,7 @@ const RequestIndex = (props) => {
                     <Table.Cell>{web3.utils.fromWei(rq.value, 'ether')}</Table.Cell>
                     <Table.Cell>{rq.recipient}</Table.Cell>
                     <Table.Cell>{rq.approvalCount}/{props.totalApprovers}</Table.Cell>
-                    <Table.Cell>Cell</Table.Cell>
+                    <Table.Cell><Button color='green' basic onClick = {()=>onApprovalClick(index)}>Approve</Button></Table.Cell>
                     <Table.Cell>Cell</Table.Cell>
                 </Table.Row>
             </Table.Body>
