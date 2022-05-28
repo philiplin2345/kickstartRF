@@ -15,15 +15,17 @@ let campaign;
 beforeEach(
     async ()=>{
         accounts = await web3.eth.getAccounts();
-        factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
-        .deploy({data:compiledFactory.bytecode})
-        .send({from:accounts[0],gas:1000000});
+    
+        let newBalance = await web3.eth.getBalance(accounts[9]);
+        factory = await new web3.eth.Contract(compiledFactory.abi)
+        .deploy({data:compiledFactory.evm.bytecode.object})
+        .send({from:accounts[0],gas:3000000});
 
 
-         await factory.methods.createCampaign('100').send({from:accounts[0],gas:1000000});
-         [campaignAddress] = await factory.methods.getDeployedCampaigns().call();//es6 notation of getting the first member of the array
+         await factory.methods.createCampaign('100').send({from:accounts[0],gas:3000000});
+         [campaignAddress] = await factory.methods.getAllCampaigns().call();//es6 notation of getting the first member of the array
 
-         campaign = await new web3.eth.Contract(JSON.parse(compiledCampaign.interface),campaignAddress);
+         campaign = await new web3.eth.Contract(compiledCampaign.abi,campaignAddress);
     }
 )
 

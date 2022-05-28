@@ -9,7 +9,7 @@ contract CampaignFactory{
         deployedCampaigns.push(address(newcp));
     }
 
-    function getAllCampaigns() public view returns (address [] memory){
+    function getDeployedCampaigns() public view returns (address [] memory){
         return deployedCampaigns;
     }
 }
@@ -17,7 +17,7 @@ contract CampaignFactory{
 
 contract Campaign {
     address public manager;
-    mapping(address => bool) approvers;
+    mapping (address => bool) public approvers;
     uint public minimumContribution;
     uint256 public numRequests;
     mapping (uint256 => Request) public requests;
@@ -78,6 +78,19 @@ contract Campaign {
         payable(currentRequest.recipient).transfer(currentRequest.value);
         
         
+    }
+
+    function getSummary() public view returns(
+        uint, uint, uint, uint, address
+    ){
+        return(
+            minimumContribution,address(this).balance,numRequests,approversCount,manager
+        );
+
+    }
+
+    function getRequestsCount() public view returns (uint){
+        return numRequests;
     }
 
  
